@@ -11,10 +11,19 @@ CREATE TABLE IF NOT EXISTS `ims`.`customers` (
     PRIMARY KEY (`custID`)
 );
 
-create table  IF NOT EXISTS `ims`.`items` (
+create table IF NOT EXISTS `ims`.`items` (
 	`IID` int not null auto_increment,
 	`name` varchar(50),
 	`price` float,
-	`primar`y key (IID)
+	primary key (IID)
 );
 
+create table  IF NOT EXISTS `ims`.`orders` (
+    `Order_ID` INT NOT NULL AUTO_INCREMENT,
+    `customer_ID` INT,
+    `Item_ID` INT,
+    `quantity` INT NOT NULL,
+    PRIMARY KEY(Order_ID),
+    FOREIGN KEY(customer_ID) REFERENCES Customers(custID),
+    FOREIGN KEY(Item_ID) REFERENCES Items(IID)
+);
