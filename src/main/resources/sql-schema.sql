@@ -11,17 +11,10 @@ CREATE TABLE IF NOT EXISTS `ims`.`customers` (
     PRIMARY KEY (`custID`)
 );
 
-<<<<<<< HEAD
 create table  IF NOT EXISTS `ims`.`items` (
 	`IID` int not null auto_increment,
 	`name` varchar(50),
 	`price` float,
-	`primar`y key (IID));
-=======
-CREATE TABLE IF NOT EXISTS `ims`.`items` (
-	`IID` int not null auto_increment,
-	`name` varchar(50),
-	`price` float,
-	primary key (IID)
-	);
->>>>>>> 5f738e4496e26b2625434ee938942fd8eabdf36b
+	`primar`y key (IID)
+);
+
