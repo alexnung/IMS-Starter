@@ -43,10 +43,18 @@ public class CustomerController implements CrudController<Customer> {
 	 */
 	@Override
 	public Customer create() {
-		LOGGER.info("Please enter a first name");
+		LOGGER.info("Please enter a first name (enter exit to cancel)");
 		String first_name = utils.getString();
-		LOGGER.info("Please enter a surname");
+		if (first_name.equals("exit")) {
+			LOGGER.info("Cancelling request");
+			return null;
+		}
+		LOGGER.info("Please enter a surname (enter exit to cancel)");
 		String surname = utils.getString();
+		if (surname.equals("exit")) {
+			LOGGER.info("Cancelling request");
+			return null;
+		}
 		Customer customer = customerDAO.create(new Customer(first_name, surname));
 		LOGGER.info("Customer created");
 		return customer;
@@ -57,12 +65,24 @@ public class CustomerController implements CrudController<Customer> {
 	 */
 	@Override
 	public Customer update() {
-		LOGGER.info("Please enter the ID of the customer you would like to update");
+		LOGGER.info("Please enter the ID of the customer you would like to update (enter 0 to cancel)");
 		Long custID = utils.getLong();
-		LOGGER.info("Please enter a first name");
+		if (custID.equals(0l)) {
+			LOGGER.info("Cancelling request");
+			return null;
+		}
+		LOGGER.info("Please enter a first name (enter exit to cancel)");
 		String first_name = utils.getString();
-		LOGGER.info("Please enter a surname");
+		if (first_name.equals("exit")) {
+			LOGGER.info("Cancelling request");
+			return null;
+		}
+		LOGGER.info("Please enter a surname (enter exit to cancel)");
 		String surname = utils.getString();
+		if (surname.equals("exit")) {
+			LOGGER.info("Cancelling request");
+			return null;
+		}
 		Customer customer = customerDAO.update(new Customer(custID, first_name, surname));
 		LOGGER.info("Customer Updated");
 		return customer;
@@ -75,8 +95,12 @@ public class CustomerController implements CrudController<Customer> {
 	 */
 	@Override
 	public int delete() {
-		LOGGER.info("Please enter the ID of the customer you would like to delete");
+		LOGGER.info("Please enter the ID of the customer you would like to delete (enter 0 to cancel)");
 		Long id = utils.getLong();
+		if (id.equals(0l)) {
+			LOGGER.info("Cancelling request");
+			return 0;
+		}
 		LOGGER.info("Customer Deleted");
 		return customerDAO.delete(id);
 	}

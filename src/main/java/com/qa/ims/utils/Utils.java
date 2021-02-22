@@ -7,7 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Utils {
-	
+
 	private static final Logger LOGGER = LogManager.getLogger();
 
 	private final Scanner scanner;
@@ -27,8 +27,8 @@ public class Utils {
 		do {
 			try {
 				input = getString();
-				if(input=="cancel") {
-					return (long) -1;
+				if (input == "cancel") {
+					return (long) 0;
 				}
 				longInput = Long.parseLong(input);
 			} catch (NumberFormatException nfe) {
@@ -48,8 +48,8 @@ public class Utils {
 		do {
 			try {
 				input = getString();
-				if(input=="cancel") {
-					return (double) -1;
+				if (input == "cancel") {
+					return (double) 0;
 				}
 				doubleInput = Double.parseDouble(input);
 			} catch (NumberFormatException nfe) {
@@ -58,12 +58,11 @@ public class Utils {
 		} while (doubleInput == null);
 		return doubleInput;
 	}
-	
+
 	public class CustomException extends SQLException {
 		public CustomException(String errorMessage) {
 			super(errorMessage);
 		}
 	}
-	
 
 }

@@ -24,19 +24,17 @@ public class OrderDAO implements Dao<Order> {
 		Long custID = resultSet.getLong("customer_ID");
 		Long Item_ID = resultSet.getLong("Item_ID");
 		Long quantity = resultSet.getLong("quantity");
-		Double Tcost = quantity*getCost(Item_ID);
+		Double Tcost = quantity * getCost(Item_ID);
 		return new Order(orderID, custID, Item_ID, quantity, Tcost);
 
 	}
-
-	
 
 	public Double getCost(Long Item_ID) {
 		ItemsDAO Items = new ItemsDAO();
 		Double Tcost = Items.read(Item_ID).getPrice();
 		return Tcost;
 	}
-	
+
 	@Override
 	public List<Order> readAll() {
 		try (Connection connection = DBUtils.getInstance().getConnection();

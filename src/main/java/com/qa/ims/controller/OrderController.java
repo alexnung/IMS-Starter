@@ -33,12 +33,24 @@ public class OrderController implements CrudController<Order> {
 
 	@Override
 	public Order create() {
-		LOGGER.info("Please enter Customer ID");
+		LOGGER.info("Please enter Customer ID (enter 0 to cancel)");
 		Long customer_ID = utils.getLong();
-		LOGGER.info("Please enter Item ID");
+		if (customer_ID.equals(0l)) {
+			LOGGER.info("Cancelling request");
+			return null;
+		}
+		LOGGER.info("Please enter Item ID (enter 0 to cancel)");
 		Long Item_ID = utils.getLong();
-		LOGGER.info("Please enter quantity");
+		if (Item_ID.equals(0l)) {
+			LOGGER.info("Cancelling request");
+			return null;
+		}
+		LOGGER.info("Please enter quantity (enter 0 to cancel)");
 		Long quantity = utils.getLong();
+		if (quantity.equals(0l)) {
+			LOGGER.info("Cancelling request");
+			return null;
+		}
 		Order order = orderDAO.create(new Order(customer_ID, Item_ID, quantity));
 		LOGGER.info("Order created");
 		return order;
@@ -46,23 +58,43 @@ public class OrderController implements CrudController<Order> {
 
 	@Override
 	public Order update() {
-		LOGGER.info("Please enter the ID of the order you would like to update");
+		LOGGER.info("Please enter the ID of the order you would like to update (enter 0 to cancel)");
 		Long Order_ID = utils.getLong();
-		LOGGER.info("Please enter CustomerID");
+		if (Order_ID.equals(0l)) {
+			LOGGER.info("Cancelling request");
+			return null;
+		}
+		LOGGER.info("Please enter CustomerID (enter 0 to cancel)");
 		Long customer_ID = utils.getLong();
-		LOGGER.info("Please enter Item ID");
+		if (customer_ID.equals(0l)) {
+			LOGGER.info("Cancelling request");
+			return null;
+		}
+		LOGGER.info("Please enter Item ID (enter 0 to cancel)");
 		Long Item_ID = utils.getLong();
-		LOGGER.info("Please enter quantity");
+		if (Item_ID.equals(0l)) {
+			LOGGER.info("Cancelling request");
+			return null;
+		}
+		LOGGER.info("Please enter quantity (enter 0 to cancel)");
 		Long quantity = utils.getLong();
-		Order order = orderDAO.update(new Order(Order_ID, customer_ID, Item_ID, quantity,0d));		
+		if (quantity.equals(0l)) {
+			LOGGER.info("Cancelling request");
+			return null;
+		}
+		Order order = orderDAO.update(new Order(Order_ID, customer_ID, Item_ID, quantity, 0d));
 		LOGGER.info("Order Updated");
 		return order;
 	}
 
 	@Override
 	public int delete() {
-		LOGGER.info("Please enter the ID of the order you would like to delete");
+		LOGGER.info("Please enter the ID of the order you would like to delete (enter 0 to cancel)");
 		Long Order_ID = utils.getLong();
+		if (Order_ID.equals(0l)) {
+			LOGGER.info("Cancelling request");
+			return 0;
+		}
 		LOGGER.info("Order Deleted");
 		return orderDAO.delete(Order_ID);
 	}

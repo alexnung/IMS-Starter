@@ -36,13 +36,13 @@ public class ItemsController implements CrudController<Items> {
 	public Items create() {
 		LOGGER.info("Please enter name (enter exit to cancel)");
 		String name = utils.getString();
-		if(name.equals("exit")) {
+		if (name.equals("exit")) {
 			LOGGER.info("Cancelling request");
 			return null;
 		}
 		LOGGER.info("Please enter price (enter 0 to cancel)");
 		Double price = utils.getDouble();
-		if(price.equals(0d)) {
+		if (price.equals(0d)) {
 			LOGGER.info("Cancelling request");
 			return null;
 		}
@@ -53,15 +53,24 @@ public class ItemsController implements CrudController<Items> {
 
 	@Override
 	public Items update() {
-		LOGGER.info("Please enter ID of item you would like to update");
+		LOGGER.info("Please enter ID of item you would like to update (enter 0 to cancel)");
 		Long IID = utils.getLong();
-		if(IID.equals(-1l)) {
+		if (IID.equals(0l)) {
+			LOGGER.info("Cancelling request");
 			return null;
 		}
-		LOGGER.info("Please enter name");
+		LOGGER.info("Please enter name (enter exit to cancel)");
 		String name = utils.getString();
-		LOGGER.info("Please enter price");
+		if (name.equals("exit")) {
+			LOGGER.info("Cancelling request");
+			return null;
+		}
+		LOGGER.info("Please enter price (enter 0 to cancel)");
 		Double price = utils.getDouble();
+		if (price.equals(0d)) {
+			LOGGER.info("Cancelling request");
+			return null;
+		}
 		Items items = ItemsDAO.update(new Items(IID, name, price));
 		LOGGER.info("Item Updated");
 		return items;
@@ -69,8 +78,12 @@ public class ItemsController implements CrudController<Items> {
 
 	@Override
 	public int delete() {
-		LOGGER.info("Please enter ID of Item you would like to delete");
+		LOGGER.info("Please enter ID of Item you would like to delete (enter 0 to cancel)");
 		Long IID = utils.getLong();
+		if (IID.equals(0l)) {
+			LOGGER.info("Cancelling request");
+			return 0;
+		}
 		LOGGER.info("Item Deleted");
 		return ItemsDAO.delete(IID);
 	}
