@@ -20,14 +20,23 @@ public class OrderDAO implements Dao<Order> {
 
 	@Override
 	public Order modelFromResultSet(ResultSet resultSet) throws SQLException {
-		Long orderID = resultSet.getLong("orderID");
-		Long custID = resultSet.getLong("custID");
+		Long orderID = resultSet.getLong("Order_ID");
+		Long custID = resultSet.getLong("customer_ID");
 		Long Item_ID = resultSet.getLong("Item_ID");
 		Long quantity = resultSet.getLong("quantity");
-		return new Order(orderID, custID, Item_ID, quantity);
+		Double cost = quantity*getCost(Item_ID);
+		return new Order(orderID, custID, Item_ID, quantity, cost);
 
 	}
 
+	
+
+	public Double getCost(Long Item_ID) {
+		ItemsDAO Items = new ItemsDAO();
+		Double cost = Items.read(Item_ID).getPrice();
+		return cost;
+	}
+	
 	@Override
 	public List<Order> readAll() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -48,7 +57,7 @@ public class OrderDAO implements Dao<Order> {
 	public Order readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM  orders BY Order_ID DESC LIMIT 1");) {
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders ORDER BY Order_ID DESC LIMIT 1");) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -75,10 +84,10 @@ public class OrderDAO implements Dao<Order> {
 		return null;
 	}
 
-	public Order read(Long orderid) {
+	public Order read(Long Order_ID) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection.prepareStatement("SELECT * FROM orders WHERE Order_ID = ?");) {
-			statement.setLong(1, orderid);
+			statement.setLong(1, Order_ID);
 			try (ResultSet resultSet = statement.executeQuery();) {
 				resultSet.next();
 				return modelFromResultSet(resultSet);
@@ -109,10 +118,10 @@ public class OrderDAO implements Dao<Order> {
 	}
 
 	@Override
-	public int delete(long orderid) {
+	public int delete(long Order_ID) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				PreparedStatement statement = connection.prepareStatement("DELETE FROM orders WHERE id = ?");) {
-			statement.setLong(1, orderid);
+				PreparedStatement statement = connection.prepareStatement("DELETE FROM orders WHERE Order_ID = ?");) {
+			statement.setLong(1, Order_ID);
 			return statement.executeUpdate();
 		} catch (Exception e) {
 			LOGGER.debug(e);

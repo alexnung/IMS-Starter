@@ -2,38 +2,40 @@ package com.qa.ims.persistence.domain;
 
 public class Order {
 
-	private Long orderID;
-	private Long custID;
+	private Long Order_ID;
+	private Long customer_ID;
 	private Long Item_ID;
 	private Long quantity;
+	private Double cost;
 
-	public Order(Long custID, Long Item_ID, Long quantity) {
-		this.setCustID(custID);
+	public Order(Long customer_ID, Long Item_ID, Long quantity) {
+		this.setCustID(customer_ID);
 		this.setItem_ID(Item_ID);
 		this.setQuantity(quantity);
 	}
 
-	public Order(Long orderID, Long custID, Long Item_ID, Long quantity) {
-		this.setOrderID(orderID);
-		this.setCustID(custID);
+	public Order(Long Order_ID, Long customer_ID, Long Item_ID, Long quantity, Double cost) {
+		this.setOrderID(Order_ID);
+		this.setCustID(customer_ID);
 		this.setItem_ID(Item_ID);
 		this.setQuantity(quantity);
+		this.setCost(cost);
 	}
 
 	public Long getOrderID() {
-		return orderID;
+		return Order_ID;
 	}
 
-	public void setOrderID(Long orderID) {
-		this.orderID = orderID;
+	public void setOrderID(Long Order_ID) {
+		this.Order_ID = Order_ID;
 	}
 
 	public Long getCustID() {
-		return custID;
+		return customer_ID;
 	}
 
-	public void setCustID(Long custID) {
-		this.custID = custID;
+	public void setCustID(Long customer_ID) {
+		this.customer_ID = customer_ID;
 	}
 
 	public Long getItem_ID() {
@@ -51,18 +53,26 @@ public class Order {
 	public void setQuantity(Long quantity) {
 		this.quantity = quantity;
 	}
+	
+	public Double getCost() {
+		return cost;
+	}
+
+	public void setCost(Double cost) {
+		this.cost = cost;
+	}
 
 	@Override
 	public String toString() {
-		return "orderID:" + orderID + " custID:" + custID + " itemID" + Item_ID + " quantity:" + quantity;
+		return "orderID:" + Order_ID + " custID:" + customer_ID + " itemID:" + Item_ID + " quantity:" + quantity+ " cost:"+ cost;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((orderID == null) ? 0 : orderID.hashCode());
-		result = prime * result + ((custID == null) ? 0 : custID.hashCode());
+		result = prime * result + ((Order_ID == null) ? 0 : Order_ID.hashCode());
+		result = prime * result + ((customer_ID == null) ? 0 : customer_ID.hashCode());
 		result = prime * result + ((Item_ID == null) ? 0 : Item_ID.hashCode());
 		result = prime * result + ((quantity == null) ? 0 : quantity.hashCode());
 		return result;
@@ -82,10 +92,10 @@ public class Order {
 				return false;
 		} else if (!getOrderID().equals(other.getOrderID()))
 			return false;
-		if (custID == null) {
-			if (other.custID != null)
+		if (customer_ID == null) {
+			if (other.customer_ID != null)
 				return false;
-		} else if (!custID.equals(other.custID))
+		} else if (!customer_ID.equals(other.customer_ID))
 			return false;
 		if (Item_ID == null) {
 			if (other.Item_ID != null)

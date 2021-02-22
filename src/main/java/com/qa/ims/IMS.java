@@ -20,18 +20,18 @@ public class IMS {
 	public static final Logger LOGGER = LogManager.getLogger();
 
 	private final CustomerController customers;
-//	private final ItemsController items;
-//	private final OrderController order;
+	private final ItemsController items;
+	private final OrderController order;
 	private final Utils utils;
 
 	public IMS() {
 		this.utils = new Utils();
 		final CustomerDAO custDAO = new CustomerDAO();
 		this.customers = new CustomerController(custDAO, utils);
-//		final ItemsDAO itemDAO = new ItemsDAO();
-//		this.items = new ItemsController(itemDAO, utils);
-///		final OrderDAO orderDAO = new OrderDAO();
-//		this.order = new OrderController(orderDAO, utils);
+		final ItemsDAO itemDAO = new ItemsDAO();
+		this.items = new ItemsController(itemDAO, utils);
+		final OrderDAO orderDAO = new OrderDAO();
+		this.order = new OrderController(orderDAO, utils);
 	}
 
 	public void imsSystem() {
@@ -60,10 +60,10 @@ public class IMS {
 				active = this.customers;
 				break;
 			case ITEM:
-//				active = this.items;
+				active = this.items;
 				break;
 			case ORDER:
-//				active = this.order;
+				active = this.order;
 				break;
 			case STOP:
 				return;
