@@ -24,8 +24,8 @@ public class OrderDAO implements Dao<Order> {
 		Long custID = resultSet.getLong("customer_ID");
 		Long Item_ID = resultSet.getLong("Item_ID");
 		Long quantity = resultSet.getLong("quantity");
-		Double cost = quantity*getCost(Item_ID);
-		return new Order(orderID, custID, Item_ID, quantity, cost);
+		Double Tcost = quantity*getCost(Item_ID);
+		return new Order(orderID, custID, Item_ID, quantity, Tcost);
 
 	}
 
@@ -33,8 +33,8 @@ public class OrderDAO implements Dao<Order> {
 
 	public Double getCost(Long Item_ID) {
 		ItemsDAO Items = new ItemsDAO();
-		Double cost = Items.read(Item_ID).getPrice();
-		return cost;
+		Double Tcost = Items.read(Item_ID).getPrice();
+		return Tcost;
 	}
 	
 	@Override
