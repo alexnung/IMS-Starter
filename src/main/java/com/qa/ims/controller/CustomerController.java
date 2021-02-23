@@ -43,20 +43,23 @@ public class CustomerController implements CrudController<Customer> {
 	 */
 	@Override
 	public Customer create() {
-		LOGGER.info("Please enter a first name (enter exit to cancel)");
-		String first_name = utils.getString();
-		if (first_name.equals("exit")) {
-			LOGGER.info("Cancelling request");
-			return null;
+		Customer customer = null;
+		while (customer == null) {
+			LOGGER.info("Please enter a first name (enter exit to cancel)");
+			String first_name = utils.getString();
+			if (first_name.equals("exit")) {
+				LOGGER.info("Cancelling request");
+				return null;
+			}
+			LOGGER.info("Please enter a surname (enter exit to return)");
+			String surname = utils.getString();
+			if (surname.equals("exit")) {
+				LOGGER.info("Returning to start");
+				continue;
+			}
+			customer = customerDAO.create(new Customer(first_name, surname));
+			LOGGER.info("Customer created");
 		}
-		LOGGER.info("Please enter a surname (enter exit to cancel)");
-		String surname = utils.getString();
-		if (surname.equals("exit")) {
-			LOGGER.info("Cancelling request");
-			return null;
-		}
-		Customer customer = customerDAO.create(new Customer(first_name, surname));
-		LOGGER.info("Customer created");
 		return customer;
 	}
 
@@ -65,6 +68,8 @@ public class CustomerController implements CrudController<Customer> {
 	 */
 	@Override
 	public Customer update() {
+		Customer customer = null;
+		while (customer == null) {
 		LOGGER.info("Please enter the ID of the customer you would like to update (enter 0 to cancel)");
 		Long custID = utils.getLong();
 		if (custID.equals(0l)) {
@@ -74,17 +79,18 @@ public class CustomerController implements CrudController<Customer> {
 		LOGGER.info("Please enter a first name (enter exit to cancel)");
 		String first_name = utils.getString();
 		if (first_name.equals("exit")) {
-			LOGGER.info("Cancelling request");
-			return null;
+			LOGGER.info("Returning to start");
+			continue;
 		}
-		LOGGER.info("Please enter a surname (enter exit to cancel)");
+		LOGGER.info("Please enter a surname (enter exit to return)");
 		String surname = utils.getString();
 		if (surname.equals("exit")) {
-			LOGGER.info("Cancelling request");
-			return null;
+			LOGGER.info("Returning to start");
+			continue;
 		}
-		Customer customer = customerDAO.update(new Customer(custID, first_name, surname));
+		customer = customerDAO.update(new Customer(custID, first_name, surname));
 		LOGGER.info("Customer Updated");
+		}
 		return customer;
 	}
 

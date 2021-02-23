@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.qa.ims.persistence.dao.ItemsDAO;
+import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.Items;
 import com.qa.ims.utils.Utils;
 
@@ -34,45 +35,51 @@ public class ItemsController implements CrudController<Items> {
 
 	@Override
 	public Items create() {
-		LOGGER.info("Please enter name (enter exit to cancel)");
-		String name = utils.getString();
-		if (name.equals("exit")) {
-			LOGGER.info("Cancelling request");
-			return null;
+		Items items = null;
+		while (items == null) {
+			LOGGER.info("Please enter name (enter exit to cancel)");
+			String name = utils.getString();
+			if (name.equals("exit")) {
+				LOGGER.info("Cancelling request");
+				return null;
+			}
+			LOGGER.info("Please enter price (enter 0 to return)");
+			Double price = utils.getDouble();
+			if (price.equals(0d)) {
+				LOGGER.info("Returning to start");
+				continue;
+			}
+			items = ItemsDAO.create(new Items(name, price));
+			LOGGER.info("Item created");
 		}
-		LOGGER.info("Please enter price (enter 0 to cancel)");
-		Double price = utils.getDouble();
-		if (price.equals(0d)) {
-			LOGGER.info("Cancelling request");
-			return null;
-		}
-		Items items = ItemsDAO.create(new Items(name, price));
-		LOGGER.info("Item created");
 		return items;
 	}
 
 	@Override
 	public Items update() {
-		LOGGER.info("Please enter ID of item you would like to update (enter 0 to cancel)");
-		Long IID = utils.getLong();
-		if (IID.equals(0l)) {
-			LOGGER.info("Cancelling request");
-			return null;
+		Items items = null;
+		while (items == null) {
+			LOGGER.info("Please enter ID of item you would like to update (enter 0 to cancel)");
+			Long IID = utils.getLong();
+			if (IID.equals(0l)) {
+				LOGGER.info("Cancelling request");
+				return null;
+			}
+			LOGGER.info("Please enter name (enter 0 to return)");
+			String name = utils.getString();
+			if (name.equals("exit")) {
+				LOGGER.info("Returning to start");
+				continue;
+			}
+			LOGGER.info("Please enter price (enter 0 to return)");
+			Double price = utils.getDouble();
+			if (price.equals(0d)) {
+				LOGGER.info("Returning to start");
+				continue;
+			}
+			items = ItemsDAO.update(new Items(IID, name, price));
+			LOGGER.info("Item Updated");
 		}
-		LOGGER.info("Please enter name (enter exit to cancel)");
-		String name = utils.getString();
-		if (name.equals("exit")) {
-			LOGGER.info("Cancelling request");
-			return null;
-		}
-		LOGGER.info("Please enter price (enter 0 to cancel)");
-		Double price = utils.getDouble();
-		if (price.equals(0d)) {
-			LOGGER.info("Cancelling request");
-			return null;
-		}
-		Items items = ItemsDAO.update(new Items(IID, name, price));
-		LOGGER.info("Item Updated");
 		return items;
 	}
 

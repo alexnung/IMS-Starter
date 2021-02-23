@@ -6,7 +6,6 @@ public class Order {
 	private Long customer_ID;
 	private Long Item_ID;
 	private Long quantity;
-	private Double Tcost;
 
 	public Order(Long customer_ID, Long Item_ID, Long quantity) {
 		this.setCustID(customer_ID);
@@ -14,12 +13,11 @@ public class Order {
 		this.setQuantity(quantity);
 	}
 
-	public Order(Long Order_ID, Long customer_ID, Long Item_ID, Long quantity, Double Tcost) {
+	public Order(Long Order_ID, Long customer_ID, Long Item_ID, Long quantity) {
 		this.setOrderID(Order_ID);
 		this.setCustID(customer_ID);
 		this.setItem_ID(Item_ID);
 		this.setQuantity(quantity);
-		this.setCost(Tcost);
 	}
 
 	public Long getOrderID() {
@@ -53,19 +51,10 @@ public class Order {
 	public void setQuantity(Long quantity) {
 		this.quantity = quantity;
 	}
-	
-	public Double getCost() {
-		return Tcost;
-	}
-
-	public void setCost(Double cost) {
-		this.Tcost = cost;
-	}
 
 	@Override
 	public String toString() {
-		return "orderID:" + Order_ID + " custID:" + customer_ID + " itemID:" + Item_ID + " quantity:" + quantity
-				+ " cost:" + Tcost;
+		return "orderID:" + Order_ID + " custID:" + customer_ID + " itemID:" + Item_ID + " quantity:" + quantity;
 	}
 
 	@Override
