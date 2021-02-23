@@ -51,10 +51,30 @@ public class OrderDetailsDAO implements Dao<Order_Details> {
 		return new ArrayList<>();
 	}
 
-	public Order_Details readOrders() {
+	public List<Order_Details> readOrders() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM order_details where FID=?");) {
+			List<Order_Details> ordersdetails = new ArrayList<>();
+			while (resultSet.next()) {
+				ordersdetails.add(modelFromResultSet(resultSet));
+			}
+			return ordersdetails;
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return new ArrayList<>();
+	}
+
+	public Order_Details readAllOrderID() {
+		return null;
+	}
+
+	public Order_Details readLatest() {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders ORDER BY Order_ID DESC LIMIT 1");) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -72,7 +92,7 @@ public class OrderDetailsDAO implements Dao<Order_Details> {
 			statement.setLong(2, orderdetails.getItem_ID());
 			statement.setLong(3, orderdetails.getQuantity());
 			statement.executeUpdate();
-			return readOrders();
+			return readLatest();
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());

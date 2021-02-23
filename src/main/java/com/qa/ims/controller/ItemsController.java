@@ -6,7 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.qa.ims.persistence.dao.ItemsDAO;
-import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.Items;
 import com.qa.ims.utils.Utils;
 
@@ -65,7 +64,7 @@ public class ItemsController implements CrudController<Items> {
 				LOGGER.info("Cancelling request");
 				return null;
 			}
-			LOGGER.info("Please enter name (enter 0 to return)");
+			LOGGER.info("Please enter name (enter exit to return)");
 			String name = utils.getString();
 			if (name.equals("exit")) {
 				LOGGER.info("Returning to start");

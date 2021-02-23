@@ -25,3 +25,13 @@ create table IF NOT EXISTS `ims`.`orders`
    FOREIGN KEY (customer_ID) REFERENCES Customers (custID),
    FOREIGN KEY (Item_ID) REFERENCES Items (IID)
 );
+CREATE TABLE IF NOT EXISTS `ims`.`order_details`
+(
+   `FID` INT (10) NOT NULL AUTO_INCREMENT,
+   `order_id` INT (10) NOT NULL,
+   `item_id` INT (10) NOT NULL,
+   `quantity` INT (10) NOT NULL,
+   PRIMARY KEY (`FID`),
+   FOREIGN KEY (`order_id`) REFERENCES orders (`Order_ID`),
+   FOREIGN KEY (`item_id`) REFERENCES items (`IID`)
+);
