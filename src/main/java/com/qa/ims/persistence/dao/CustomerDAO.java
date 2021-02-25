@@ -33,12 +33,17 @@ public class CustomerDAO implements Dao<Customer> {
 	 */
 	@Override
 	public List<Customer> readAll() {
+		long count = 0;
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM customers");) {
 			List<Customer> customers = new ArrayList<>();
 			while (resultSet.next()) {
 				customers.add(modelFromResultSet(resultSet));
+				count++;
+			}
+			if (count < 1) {
+				LOGGER.info("Empty result set");
 			}
 			return customers;
 		} catch (SQLException e) {

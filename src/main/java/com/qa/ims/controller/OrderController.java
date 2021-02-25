@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.qa.ims.persistence.dao.OrderDAO;
 import com.qa.ims.persistence.dao.OrderDetailsDAO;
-import com.qa.ims.persistence.domain.Items;
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.utils.Utils;
 
@@ -19,7 +18,7 @@ public class OrderController implements CrudController<Order> {
 	private OrderDetailsDAO orderdetailsDAO;
 	private Utils utils;
 
-	public OrderController(OrderDAO orderDAO, Utils utils) {
+	public OrderController(OrderDAO orderDAO, Utils utils, OrderDetailsDAO orderdetailsDAO) {
 		super();
 		this.orderDAO = orderDAO;
 		this.orderdetailsDAO = orderdetailsDAO;
@@ -97,16 +96,38 @@ public class OrderController implements CrudController<Order> {
 		return order;
 	}
 
+//	@Override
+//	public int delete() {
+//		LOGGER.info("Please enter the ID of the order you would like to delete (enter 0 to cancel)");
+//		Long Order_ID = utils.getLong();
+//		if (Order_ID.equals(0l)) {
+//			LOGGER.info("Cancelling request");
+//			return 0;
+//		}
+//		LOGGER.info("Order Deleted");
+//		return orderDAO.delete(Order_ID);
+//	}
+
 	@Override
 	public int delete() {
-		LOGGER.info("Please enter the ID of the order you would like to delete (enter 0 to cancel)");
-		Long Order_ID = utils.getLong();
-		if (Order_ID.equals(0l)) {
-			LOGGER.info("Cancelling request");
-			return 0;
+		Order order = null;
+		while (order == null) {
+			LOGGER.info("Please enter the ID of the order you would like to delete (enter 0 to cancel)");
+			Long Order_ID = utils.getLong();
+			if (Order_ID.equals(0l)) {
+				LOGGER.info("Cancelling request");
+				return 0;
+			}
+			LOGGER.info("Please enter the ID of the item you would like to delete (enter 0 to cancel)");
+			Long Item_ID = utils.getLong();
+			if (Item_ID.equals(0l)) {
+				LOGGER.info("Returning to start");
+				continue;
+			}
+			LOGGER.info("Order Deleted");
+			return orderdetailsDAO.deleteorder(Order_ID, Item_ID);
 		}
-		LOGGER.info("Order Deleted");
-		return orderDAO.delete(Order_ID);
-	}
+		return 0;
 
+	}
 }

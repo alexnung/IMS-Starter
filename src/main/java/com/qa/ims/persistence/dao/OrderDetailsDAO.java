@@ -36,12 +36,17 @@ public class OrderDetailsDAO implements Dao<Order_Details> {
 
 	@Override
 	public List<Order_Details> readAll() {
+		long count = 0;
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM order_details");) {
 			List<Order_Details> ordersdetails = new ArrayList<>();
 			while (resultSet.next()) {
 				ordersdetails.add(modelFromResultSet(resultSet));
+				count++;
+			}
+			if (count < 1) {
+				LOGGER.info("Empty result set");
 			}
 			return ordersdetails;
 		} catch (SQLException e) {
@@ -49,32 +54,12 @@ public class OrderDetailsDAO implements Dao<Order_Details> {
 			LOGGER.error(e.getMessage());
 		}
 		return new ArrayList<>();
-	}
-
-	public List<Order_Details> readOrders() {
-		try (Connection connection = DBUtils.getInstance().getConnection();
-				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM order_details where FID=?");) {
-			List<Order_Details> ordersdetails = new ArrayList<>();
-			while (resultSet.next()) {
-				ordersdetails.add(modelFromResultSet(resultSet));
-			}
-			return ordersdetails;
-		} catch (SQLException e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
-		}
-		return new ArrayList<>();
-	}
-
-	public Order_Details readAllOrderID() {
-		return null;
 	}
 
 	public Order_Details readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders ORDER BY Order_ID DESC LIMIT 1");) {
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM order_details ORDER BY Order_ID DESC LIMIT 1");) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -116,6 +101,14 @@ public class OrderDetailsDAO implements Dao<Order_Details> {
 		return null;
 	}
 
+	public List<Order_Details> readOrders() {
+		return new ArrayList<>();
+	}
+
+	public Order_Details readAllOrderID() {
+		return null;
+	}
+
 	@Override
 	public Order_Details update(Order_Details orderdetails) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -139,6 +132,20 @@ public class OrderDetailsDAO implements Dao<Order_Details> {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection.prepareStatement("DELETE FROM order_details WHERE FID = ?");) {
 			statement.setLong(1, FID);
+			return statement.executeUpdate();
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return 0;
+	}
+
+	public int deleteorder(long Order_ID, long Item_ID) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				PreparedStatement statement = connection
+						.prepareStatement("DELETE FROM order_details WHERE Order_ID = ? and Item_ID = ?");) {
+			statement.setLong(1, Order_ID);
+			statement.setLong(2, Item_ID);
 			return statement.executeUpdate();
 		} catch (Exception e) {
 			LOGGER.debug(e);

@@ -22,20 +22,32 @@ public class OrderDAO implements Dao<Order> {
 	public Order modelFromResultSet(ResultSet resultSet) throws SQLException {
 		Long orderID = resultSet.getLong("Order_ID");
 		Long custID = resultSet.getLong("customer_ID");
-		Long Item_ID = resultSet.getLong("Item_ID");
+		Long item_ID = resultSet.getLong("item_ID");
 		Long quantity = resultSet.getLong("quantity");
-		return new Order(orderID, custID, Item_ID, quantity);
+		Double cost = quantity * getCost(item_ID);
+		return new Order(orderID, custID, item_ID, quantity, cost);
 
+	}
+
+	public Double getCost(Long item_ID) {
+		ItemsDAO Items = new ItemsDAO();
+		Double cost = Items.read(item_ID).getPrice();
+		return cost;
 	}
 
 	@Override
 	public List<Order> readAll() {
+		long count = 0;
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders");) {
 			List<Order> orders = new ArrayList<>();
 			while (resultSet.next()) {
 				orders.add(modelFromResultSet(resultSet));
+				count++;
+			}
+			if (count < 1) {
+				LOGGER.info("Empty result set");
 			}
 			return orders;
 		} catch (SQLException e) {
@@ -111,8 +123,22 @@ public class OrderDAO implements Dao<Order> {
 	@Override
 	public int delete(long Order_ID) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				PreparedStatement statement = connection.prepareStatement("DELETE FROM orders WHERE Order_ID = ?");) {
+				PreparedStatement statement = connection.prepareStatement("DELETE FROM orders WHERE ORder_ID = ?");) {
 			statement.setLong(1, Order_ID);
+			return statement.executeUpdate();
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return 0;
+	}
+
+	public int deleteorder(long Order_ID, long Item_ID) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				PreparedStatement statement = connection
+						.prepareStatement("DELETE FROM orders WHERE Order_ID = ? and Item_ID = ?");) {
+			statement.setLong(1, Order_ID);
+			statement.setLong(2, Item_ID);
 			return statement.executeUpdate();
 		} catch (Exception e) {
 			LOGGER.debug(e);

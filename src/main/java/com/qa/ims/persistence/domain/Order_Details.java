@@ -13,6 +13,13 @@ public class Order_Details {
 		this.setOrder_ID(order_ID);
 		this.setItem_ID(item_ID);
 	}
+	
+	public Order_Details(Long FID, Long order_ID, Long item_ID, Long quantity) {
+		this.setFID(FID);
+		this.setOrder_ID(order_ID);
+		this.setItem_ID(item_ID);
+		this.setQuantity(quantity);
+	}
 
 	public Order_Details(Long FID, Long order_ID, Long item_ID, Long quantity, Double cost) {
 		this.setFID(FID);
@@ -64,7 +71,8 @@ public class Order_Details {
 
 	@Override
 	public String toString() {
-		return "ID:" + FID + " Order ID:" + order_ID + " itemID:" + item_ID + " quantity:" + quantity + " cost:" + cost;
+		return "Order_Details [FID=" + FID + ", order_ID=" + order_ID + ", item_ID=" + item_ID + ", quantity="
+				+ quantity + ", cost=" + cost + "]";
 	}
 
 	@Override

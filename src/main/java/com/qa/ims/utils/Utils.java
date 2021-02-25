@@ -1,6 +1,5 @@
 package com.qa.ims.utils;
 
-import java.sql.SQLException;
 import java.util.Scanner;
 
 import org.apache.logging.log4j.LogManager;
@@ -27,7 +26,7 @@ public class Utils {
 		do {
 			try {
 				input = getString();
-				if (input == "cancel") {
+				if (input.equals("cancel")) {
 					return (long) 0;
 				}
 				longInput = Long.parseLong(input);
@@ -48,21 +47,16 @@ public class Utils {
 		do {
 			try {
 				input = getString();
-				if (input == "cancel") {
+				if (input.equals("cancel")) {
 					return (double) 0;
 				}
+				
 				doubleInput = Double.parseDouble(input);
 			} catch (NumberFormatException nfe) {
 				LOGGER.info("Error - Please enter a number");
 			}
 		} while (doubleInput == null);
 		return doubleInput;
-	}
-
-	public class CustomException extends SQLException {
-		public CustomException(String errorMessage) {
-			super(errorMessage);
-		}
 	}
 
 }
