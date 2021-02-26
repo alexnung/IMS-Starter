@@ -2,35 +2,35 @@ package com.qa.ims.persistence.domain;
 
 public class Customer {
 
-	private Long id;
-	private String firstName;
+	private Long custID;
+	private String first_name;
 	private String surname;
 
-	public Customer(String firstName, String surname) {
-		this.setFirstName(firstName);
+	public Customer(String first_name, String surname) {
+		this.setFirstName(first_name);
 		this.setSurname(surname);
 	}
 
-	public Customer(Long id, String firstName, String surname) {
-		this.setId(id);
-		this.setFirstName(firstName);
+	public Customer(Long custID, String first_name, String surname) {
+		this.setId(custID);
+		this.setFirstName(first_name);
 		this.setSurname(surname);
 	}
 
-	public Long getId() {
-		return id;
+	public Long getcustID() {
+		return custID;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setId(Long custID) {
+		this.custID = custID;
 	}
 
 	public String getFirstName() {
-		return firstName;
+		return first_name;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setFirstName(String first_name) {
+		this.first_name = first_name;
 	}
 
 	public String getSurname() {
@@ -43,15 +43,15 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "id:" + id + " first name:" + firstName + " surname:" + surname;
+		return "id:" + custID + " first name:" + first_name + " surname:" + surname;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((first_name == null) ? 0 : first_name.hashCode());
+		result = prime * result + ((custID == null) ? 0 : custID.hashCode());
 		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
 		return result;
 	}
@@ -70,10 +70,10 @@ public class Customer {
 				return false;
 		} else if (!getFirstName().equals(other.getFirstName()))
 			return false;
-		if (id == null) {
-			if (other.id != null)
+		if (custID == null) {
+			if (other.custID != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!custID.equals(other.custID))
 			return false;
 		if (surname == null) {
 			if (other.surname != null)
