@@ -1,7 +1,7 @@
 Coverage: 80.7%
 IMS Project
 
-The IMS (Inventory Management System) allows management of stock of items and customers to create, update, read and delete. Ensuring orders are tracked to store the correct within an order.
+The IMS (Inventory Management System) allows management of stock of items and customers to create, update, read and delete. Ensuring orders are tracked to store the correct values within an order.
 
 ## Getting Started
 Upon opening, you will encounter the IMS start screen offering the option to use customer, item, order and stop(closes application).
@@ -72,4 +72,4 @@ This project is licensed under the MIT license - see the [LICENSE.md](LICENSE.md
 * Ifan Clarke - for the moral support/help
 * Ed Reynolds - Teaching/Helping with problems
 * Jordan Harrison - IMS-Starter
-* Shafeeq Muhammad - Teach Java
+* Shafeeq Muhammad - Teaching Java
