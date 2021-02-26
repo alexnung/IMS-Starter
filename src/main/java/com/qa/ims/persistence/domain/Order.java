@@ -7,6 +7,7 @@ public class Order {
 	private Long Item_ID;
 	private Long quantity;
 	private Double cost;
+	
 
 	public Order(Long customer_ID, Long Item_ID, Long quantity) {
 		this.setCustID(customer_ID);

@@ -15,13 +15,13 @@ public class OrdersTest {
 
 	@Test
 	public void testOrder() {
-		Order order = new Order(1L,1L,1L);
+		Order order = new Order(1L, 1L, 1L);
 		assertTrue(order instanceof Order);
 	}
 
 	@Test
 	public void testOrder2() {
-		Order order = new Order(1L,1L,1L,1L);
+		Order order = new Order(1L, 1L, 1L, 1L);
 		assertTrue(order instanceof Order);
 	}
 

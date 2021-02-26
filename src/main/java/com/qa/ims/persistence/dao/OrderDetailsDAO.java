@@ -101,14 +101,6 @@ public class OrderDetailsDAO implements Dao<Order_Details> {
 		return null;
 	}
 
-	public List<Order_Details> readOrders() {
-		return new ArrayList<>();
-	}
-
-	public Order_Details readAllOrderID() {
-		return null;
-	}
-
 	@Override
 	public Order_Details update(Order_Details orderdetails) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -140,7 +132,7 @@ public class OrderDetailsDAO implements Dao<Order_Details> {
 		return 0;
 	}
 
-	public int deleteorder(long Order_ID, long Item_ID) {
+/*	public int deleteorder(long Order_ID, long Item_ID) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection
 						.prepareStatement("DELETE FROM order_details WHERE Order_ID = ? and Item_ID = ?");) {
@@ -152,6 +144,6 @@ public class OrderDetailsDAO implements Dao<Order_Details> {
 			LOGGER.error(e.getMessage());
 		}
 		return 0;
-	}
+	}*/
 
 }

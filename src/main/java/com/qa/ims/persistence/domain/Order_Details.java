@@ -8,6 +8,11 @@ public class Order_Details {
 	private Long quantity;
 	private Double cost;
 
+	public Order_Details(Long order_ID, Long item_ID) {
+		this.setOrder_ID(order_ID);
+		this.setItem_ID(item_ID);
+	}
+	
 	public Order_Details(Long FID, Long order_ID, Long item_ID) {
 		this.setFID(FID);
 		this.setOrder_ID(order_ID);
@@ -83,6 +88,7 @@ public class Order_Details {
 		result = prime * result + ((order_ID == null) ? 0 : order_ID.hashCode());
 		result = prime * result + ((item_ID == null) ? 0 : item_ID.hashCode());
 		result = prime * result + ((quantity == null) ? 0 : quantity.hashCode());
+		result = prime * result + ((cost == null) ? 0 : cost.hashCode());
 		return result;
 	}
 
@@ -114,6 +120,11 @@ public class Order_Details {
 			if (other.quantity != null)
 				return false;
 		} else if (!quantity.equals(other.quantity))
+			return false;
+		if (cost == null) {
+			if (other.cost != null)
+				return false;
+		} else if (!cost.equals(other.cost))
 			return false;
 
 		return true;

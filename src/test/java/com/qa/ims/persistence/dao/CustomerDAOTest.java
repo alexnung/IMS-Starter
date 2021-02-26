@@ -33,6 +33,15 @@ public class CustomerDAOTest {
 		expected.add(new Customer(1L, "pete", "jones"));
 		assertEquals(expected, DAO.readAll());
 	}
+	
+	@Test
+	public void testReadAllExceptions() {
+		DBUtils.connect("db.url=jdbc:h2:~/ims");
+		List<Customer> expected = new ArrayList<>();
+		List<Customer> newl = new ArrayList<>();
+		expected.add(new Customer(1L, "pete","jones"));
+		assertEquals(newl, DAO.readAll());
+	}
 
 	@Test
 	public void testReadLatest() {
@@ -50,9 +59,24 @@ public class CustomerDAOTest {
 		final Customer updated = new Customer(1L, "Tim", "Jim");
 		assertEquals(updated, DAO.update(updated));
 	}
+	
+	@Test
+	public void testUpdateExceptions() {
+		DBUtils.connect("db.url=jdbc:h2:~/ims");
+		Customer updated = new Customer(1L, "Tim", "Jim");
+		assertEquals(null, DAO.update(updated));
+	}
 
 	@Test
 	public void testDelete() {
 		assertEquals(1, DAO.delete(1));
+	}
+	
+	@Test
+	public void DeleteExceptions() {
+		DBUtils.connect("db.url=jdbc:h2:~/ims");
+		Customer created = new Customer(1L,"Tim","Jim");
+		DAO.create(created);
+		assertEquals(0,DAO.delete(1));
 	}
 }

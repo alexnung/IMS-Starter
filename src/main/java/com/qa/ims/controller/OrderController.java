@@ -6,7 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.qa.ims.persistence.dao.OrderDAO;
-import com.qa.ims.persistence.dao.OrderDetailsDAO;
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.utils.Utils;
 
@@ -15,13 +14,11 @@ public class OrderController implements CrudController<Order> {
 	public static final Logger LOGGER = LogManager.getLogger();
 
 	private OrderDAO orderDAO;
-	private OrderDetailsDAO orderdetailsDAO;
 	private Utils utils;
 
-	public OrderController(OrderDAO orderDAO, Utils utils, OrderDetailsDAO orderdetailsDAO) {
+	public OrderController(OrderDAO orderDAO, Utils utils) {
 		super();
 		this.orderDAO = orderDAO;
-		this.orderdetailsDAO = orderdetailsDAO;
 		this.utils = utils;
 	}
 
@@ -110,24 +107,14 @@ public class OrderController implements CrudController<Order> {
 
 	@Override
 	public int delete() {
-		Order order = null;
-		while (order == null) {
-			LOGGER.info("Please enter the ID of the order you would like to delete (enter 0 to cancel)");
-			Long Order_ID = utils.getLong();
-			if (Order_ID.equals(0l)) {
-				LOGGER.info("Cancelling request");
-				return 0;
-			}
-			LOGGER.info("Please enter the ID of the item you would like to delete (enter 0 to cancel)");
-			Long Item_ID = utils.getLong();
-			if (Item_ID.equals(0l)) {
-				LOGGER.info("Returning to start");
-				continue;
-			}
-			LOGGER.info("Order Deleted");
-			return orderdetailsDAO.deleteorder(Order_ID, Item_ID);
+		LOGGER.info("Please enter the ID of the customer you would like to delete (enter 0 to cancel)");
+		Long order_ID = utils.getLong();
+		if (order_ID.equals(0l)) {
+			LOGGER.info("Cancelling request");
+			return 0;
 		}
-		return 0;
-
+		LOGGER.info("Customer Deleted");
+		return orderDAO.delete(order_ID);
 	}
+	
 }
