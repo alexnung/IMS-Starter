@@ -14,6 +14,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.qa.ims.controller.ItemsController;
 import com.qa.ims.persistence.dao.ItemsDAO;
+import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.Items;
 import com.qa.ims.utils.Utils;
 
@@ -45,7 +46,19 @@ public class ItemsControllerTest {
 		Mockito.verify(utils, Mockito.times(1)).getDouble();
 		Mockito.verify(dao, Mockito.times(1)).create(created);
 	}
-
+	
+	@Test
+	public void testCreate2() {
+		final String name = "apples";
+		final Double price = 2D;
+		final Items created = new Items(name, price);
+		Mockito.when(utils.getString()).thenReturn(name, "exit");
+		Mockito.when(utils.getDouble()).thenReturn(0D);
+		assertEquals(null, controller.create());
+		Mockito.verify(utils, Mockito.times(2)).getString();
+		Mockito.verify(utils, Mockito.times(1)).getDouble();
+	}
+	
 	@Test
 	public void testReadAll() {
 		List<Items> items = new ArrayList<>();
@@ -74,6 +87,13 @@ public class ItemsControllerTest {
 		Mockito.verify(this.utils, Mockito.times(1)).getDouble();
 		Mockito.verify(this.dao, Mockito.times(1)).update(updated);
 	}
+	
+	@Test
+	public void testUpdate2() {
+		Mockito.when(utils.getLong()).thenReturn(0L);
+		assertEquals(null, controller.update());
+		Mockito.verify(utils, Mockito.times(1)).getLong();
+	}
 
 	@Test
 	public void testDelete() {
@@ -86,6 +106,17 @@ public class ItemsControllerTest {
 
 		Mockito.verify(utils, Mockito.times(1)).getLong();
 		Mockito.verify(dao, Mockito.times(1)).delete(ID);
+	}
+	
+	@Test
+	public void testDelete2() {
+		final long ID = 0L;
+
+		Mockito.when(utils.getLong()).thenReturn(ID);
+
+		assertEquals(0L, this.controller.delete());
+
+		Mockito.verify(utils, Mockito.times(1)).getLong();
 	}
 
 }

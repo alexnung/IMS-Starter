@@ -42,20 +42,22 @@ public class CustomerControllerTest {
 		Mockito.verify(utils, Mockito.times(2)).getString();
 		Mockito.verify(dao, Mockito.times(1)).create(created);
 	}
-	
-/*	@Test
+
+	@Test
 	public void testCreate2() {
-		final String F_NAME = "exit", L_NAME = "scott";
-		final Customer created = new Customer(F_NAME, L_NAME);
-
-		Mockito.when(utils.getString()).thenReturn("exit", L_NAME);
-		Mockito.when(dao.create(created)).thenReturn(null);
-
+		Mockito.when(utils.getString()).thenReturn("exit");
 		assertEquals(null, controller.create());
-
 		Mockito.verify(utils, Mockito.times(1)).getString();
-		Mockito.verify(dao, Mockito.times(1)).create(null);
-	}*/
+	}
+
+	@Test
+	public void testCreate3() {
+		final String F_NAME = "barry", L_NAME = "scott";
+		final Customer created = new Customer(F_NAME, L_NAME);
+		Mockito.when(utils.getString()).thenReturn(F_NAME, "exit", "exit");
+		assertEquals(null, controller.create());
+		Mockito.verify(utils, Mockito.times(3)).getString();
+	}
 
 	@Test
 	public void testReadAll() {
@@ -83,7 +85,26 @@ public class CustomerControllerTest {
 		Mockito.verify(this.utils, Mockito.times(2)).getString();
 		Mockito.verify(this.dao, Mockito.times(1)).update(updated);
 	}
-
+	
+	@Test
+	public void testUpdate2() {
+		Mockito.when(utils.getLong()).thenReturn(0L);
+		assertEquals(null, controller.update());
+		Mockito.verify(utils, Mockito.times(1)).getLong();
+	}
+	
+/*	@Test
+	public void testUpdate3() {
+		Customer updated = new Customer(1L, "chris", "perrins");
+		Mockito.when(this.utils.getLong()).thenReturn(1L, 0L);
+		
+		Mockito.when(this.utils.getString()).thenReturn("exit");
+		Mockito.when(this.dao.update(updated)).thenReturn(updated);
+		assertEquals(null, controller.update());
+		Mockito.verify(utils, Mockito.times(2)).getLong();
+		Mockito.verify(utils, Mockito.times(1)).getString();
+	}*/
+	
 	@Test
 	public void testDelete() {
 		final long ID = 1L;
@@ -95,6 +116,17 @@ public class CustomerControllerTest {
 
 		Mockito.verify(utils, Mockito.times(1)).getLong();
 		Mockito.verify(dao, Mockito.times(1)).delete(ID);
+	}
+
+	@Test
+	public void testDelete2() {
+		final long ID = 0L;
+
+		Mockito.when(utils.getLong()).thenReturn(ID);
+
+		assertEquals(0L, this.controller.delete());
+
+		Mockito.verify(utils, Mockito.times(1)).getLong();
 	}
 
 }

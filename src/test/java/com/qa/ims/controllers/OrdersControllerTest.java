@@ -14,6 +14,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.qa.ims.controller.OrderController;
 import com.qa.ims.persistence.dao.OrderDAO;
+import com.qa.ims.persistence.domain.Items;
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.utils.Utils;
 
@@ -43,21 +44,15 @@ public class OrdersControllerTest {
 		Mockito.verify(utils, Mockito.times(3)).getLong();
 		Mockito.verify(dao, Mockito.times(1)).create(created);
 	}
-
-/*	@Test
+	
+	@Test
 	public void testCreate2() {
-		final Long order_ID = 1L, item_ID = 1L, quantity = 1L;
-
-		final Order_Details created = new Order_Details(1L, 1L, 1L);
-
-		Mockito.when(utils.getLong()).thenReturn(order_ID, item_ID, quantity);
-		Mockito.when(dao2.create(created)).thenReturn(created);
-
-		assertEquals(created, controller.create());
-
-		Mockito.verify(utils, Mockito.times(3)).getLong();
-		Mockito.verify(dao2, Mockito.times(1)).create(created);
-	}*/
+		final Long customer_ID = 1L, Item_ID = 1L, quantity = 1L;
+		final Order created = new Order(1L, 1L, 1L);
+		Mockito.when(utils.getLong()).thenReturn(0L);
+		assertEquals(null, controller.create());
+		Mockito.verify(utils, Mockito.times(1)).getLong();
+	}
 
 	@Test
 	public void testReadAll() {
@@ -84,6 +79,13 @@ public class OrdersControllerTest {
 		Mockito.verify(this.utils, Mockito.times(4)).getLong();
 		Mockito.verify(this.dao, Mockito.times(1)).update(updated);
 	}
+	
+	@Test
+	public void testUpdate2() {
+		Mockito.when(utils.getLong()).thenReturn(0L);
+		assertEquals(null, controller.update());
+		Mockito.verify(utils, Mockito.times(1)).getLong();
+	}
 
 	@Test
 	public void testDelete() {
@@ -97,20 +99,26 @@ public class OrdersControllerTest {
 		Mockito.verify(utils, Mockito.times(1)).getLong();
 		Mockito.verify(dao, Mockito.times(1)).delete(ID);
 	}
-	
-/*	class Order {
-	    private Double cost;
-	    Order(Double cost) {
-	    	this.cost=cost;
-	    }
-	}*/
-	
+
+	@Test
+	public void testDelete2() {
+		final long ID = 0L;
+
+		Mockito.when(utils.getLong()).thenReturn(ID);
+
+		assertEquals(0L, this.controller.delete());
+
+		Mockito.verify(utils, Mockito.times(1)).getLong();
+	}
+
+	/*
+	 * class Order { private Double cost; Order(Double cost) { this.cost=cost; } }
+	 */
+
 //	final Order mocked=Mockito.mock(Order.class, Mockito.RETURNS_DEEP_STUBS);
 //	Mockito.when(mockedOrder.getCost)).thenCallRealMethod();
 //	Mockito.when(mocked.get
 //	Mockito.when(mockedDog.getSound()).thenCallRealMethod();
 //	Mockito.doCallRealMethod().when(mockedDog).setSound(Mockito.any(Sound.class));
-	    
-
 
 }
